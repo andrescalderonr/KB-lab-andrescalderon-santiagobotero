@@ -2,24 +2,25 @@ from __future__ import annotations
 from src.enums import Value
 
 class Fact:
-  """ definicion de hechos bajo el lenguaje establecido y su sintaxis
-  """
+  """Definition of facts in the language."""
+  proposition: str
+  value: Value
+  source: str
 
   @classmethod
   def fact(cls, proposition: str, value: Value, source: str):
-    """ establece un nuevo hecho
-    Args:
-      proposition: nombre de la proposicion
-      value: valor que toma la proposición
-      source: fuente que dio el valor para la proposicion: usuario o regla
-    Returns:
-    """
-    pass
+      """
+      Creates a Fact object WITHOUT calling a constructor.
+      Attributes are attached dynamically.
+      """
+      obj = cls()
+      obj.proposition = proposition
+      obj.value = value
+      obj.source = source
+      return obj
 
   def to_string(self) -> str:
-    """ muestra la expresión de un hecho en el lenguaje
-    Args:
-    Returns:
-      hecho en lenguaje natural: nombre, valor y fuente que permitio conocer su valor
     """
-    pass
+    Returns the natural-language representation of the fact.
+    """
+    return f"{self.proposition} = {self.value.name} (source: {self.source})"
