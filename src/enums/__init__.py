@@ -1,1 +1,1 @@
-from Value import *
+from .Value import *

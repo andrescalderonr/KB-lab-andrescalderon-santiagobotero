@@ -14,7 +14,10 @@ class Rule:
           conclusion: proposición que implica de la regla (consecuente)
         Returns:
         """
-        pass
+        obj = cls()
+        obj.condition = condition
+        obj.conclusion = conclusion
+        return obj
 
     def can_apply(self, fb: FactBase) -> Value:
         """ evalua la semantica de la regla a partir de los hechos
@@ -23,7 +26,19 @@ class Rule:
         Returns:
            valor semántico de la regla
         """
-        pass
+        has_unknown = False
+
+        for prop in self.condition:
+            value = fb.get_value(prop)
+            if value == Value.FALSE:
+                return Value.FALSE
+            elif value == Value.UNKNOWN:
+                has_unknown = True
+
+        if has_unknown:
+            return Value.UNKNOWN
+
+        return Value.TRUE
 
     def get_conclusion(self) -> str:
         """ obtener la conclusion que implica (entail) de la regla
@@ -31,7 +46,7 @@ class Rule:
         Returns:
            proposicion consecuente
         """
-        pass
+        return self.conclusion
 
     def to_string(self) -> str:
         """ muestra la expresión de una regla en el lenguaje
@@ -39,4 +54,5 @@ class Rule:
         Returns:
           regla en lenguaje natural
         """
-        pass
+        conditions_str = " AND ".join(self.condition)
+        return f"IF {conditions_str} THEN {self.conclusion}"

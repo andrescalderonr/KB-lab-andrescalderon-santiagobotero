@@ -1,1 +1,1 @@
-from InferenceEngine import *
+from .InferenceEngine import *

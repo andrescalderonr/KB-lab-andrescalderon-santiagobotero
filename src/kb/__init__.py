@@ -1,2 +1,2 @@
-from KnowledgeBase import *
-from Rule import *
+from .KnowledgeBase import *
+from .Rule import *

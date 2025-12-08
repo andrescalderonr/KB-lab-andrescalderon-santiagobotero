@@ -1,2 +1,2 @@
-from FactBase import *
-from Fact import *
+from .FactBase import *
+from .Fact import *

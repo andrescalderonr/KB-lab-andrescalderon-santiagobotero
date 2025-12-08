@@ -1,6 +1,6 @@
 from __future__ import annotations
 from typing import List
-from Rule import Rule
+from .Rule import Rule
 
 class KnowledgeBase:
   """ base de conocimiento a partir de reglas bajo la sintaxis pertinente
@@ -11,7 +11,9 @@ class KnowledgeBase:
     Args:
     Returns:
     """
-    pass
+    obj = cls()
+    obj.rules = []
+    return obj
 
   def add_rule(self, condition: List[str], conclusion: str):
     """ añade una nueva regla a la base de conocimiento
@@ -20,7 +22,8 @@ class KnowledgeBase:
       conclusion: proposición que implica de la regla (consecuente)
     Returns:
     """
-    pass
+    rule = Rule.rule(condition, conclusion)
+    self.rules.append(rule)
 
   def could_deduce(self, proposition: str) -> List[Rule]:
     """ sustrae las reglas que permiten concluir una proposicion
@@ -29,7 +32,7 @@ class KnowledgeBase:
     Returns:
       listado de las reglas desencadenadas
     """
-    pass
+    return [rule for rule in self.rules if rule.get_conclusion() == proposition]
 
   def num_rules(self) -> int:
     """ determina cantidad de reglas en la base de conocimiento
@@ -37,7 +40,7 @@ class KnowledgeBase:
     Returns:
       número de reglas
     """
-    pass
+    return len(self.rules)
 
   def get_rule(self, r: int) -> Rule:
     """ obtiene la regla según su indicador
@@ -46,7 +49,9 @@ class KnowledgeBase:
     Returns:
       regla
     """
-    pass
+    if 0 <= r < len(self.rules):
+        return self.rules[r]
+    return None
 
   def to_string(self) -> str:
     """ muestra la expresión de una base de conocimiento de reglas en el lenguaje
@@ -54,4 +59,10 @@ class KnowledgeBase:
     Returns:
       base de reglas en lenguaje natural
     """
-    pass
+    if not self.rules:
+        return "Base de conocimiento vacía"
+
+    result = "=== BASE DE CONOCIMIENTO ===\n"
+    for i, rule in enumerate(self.rules):
+        result += f"  R{i + 1}: {rule.to_string()}\n"
+    return result
