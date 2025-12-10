@@ -312,6 +312,21 @@ class InferenceEngine():
     pass
 ```
 
+### IMPLEMENTACIÓN DE MOTOR DE INFERENCIA
+
+Se implementó un sistema basado en reglas siguiendo la simplificación del lenguaje propuesta, donde los elementos básicos son proposiciones con valores de verdad (true, false o unknown). Las reglas del sistema cuentan con una única conclusión y sus condiciones se combinan únicamente mediante el conectivo AND.
+
+El motor de inferencia desarrollado permite:
+
+- Crear y mantener una base de conocimiento compuesta por reglas y hechos.
+- Realizar razonamiento hacia adelante (forward chaining), deduciendo nuevos hechos a partir de los ya conocidos y las reglas definidas.
+- Realizar razonamiento hacia atrás (backward chaining), verificando si una hipótesis específica puede ser inferida a partir de los hechos y reglas disponibles.
+- Explicar el cómo de cada conclusión, identificando la fuente y la secuencia de reglas que permitió deducir un hecho.
+
+La implementación incluye estructuras de datos para representar hechos, reglas y sus respectivas bases, así como el motor de inferencia capaz de actualizar la base de hechos según las reglas aplicables y de rastrear la justificación de cada inferencia.
+
+Este sistema permite modelar de manera efectiva escenarios de razonamiento experto, como el caso de uso Zookeeper, donde a partir de características conocidas de animales se puede clasificar su especie mediante reglas encadenadas y hechos iniciales.
+
 ## PARTE II. IMPLEMENTACIÓN DE BASE DE CONOCIMIENTO - CASO DE USO {#parte-ii-implementación-de-base-de-conocimiento---caso-de-uso}
 
 Implementar en el lenguaje anteriormente definido, las base (hechos y
@@ -325,22 +340,66 @@ otro de inferencia hacia atras.**
 # Implementar las bases ZOOKEEPER y establecer dos casos de prueba
 ```
 
+### IMPLEMENTACIÓN DE ZOOKEEPER
+
+Se implementó la base de conocimiento del Zookeeper utilizando las estructuras previamente definidas para hechos (FactBase) y reglas (KnowledgeBase). La implementación contempla la clasificación de animales, subclasificación de mamíferos y aves, y la identificación de especies específicas, siguiendo el esquema proporcionado en el caso de estudio.
+
+Se definieron las reglas de inferencia para la clasificación de animales y se cargaron hechos iniciales representativos de dos animales: Stretch (giraffe) y Splashy (penguin).
+
+Reglas y hechos implementados:
+
+```python
+from src.zookeeper import Zookeeper
+
+# Zookeeper: definición de reglas
+kb = Zookeeper.initial_rules()
+fb = Zookeeper.initial_working_memory()
+```
+
+Se establecieron dos casos de prueba para verificar el correcto funcionamiento del motor de inferencia:
+
+1. **Inferencia hacia adelante (Forward Chaining):**
+
+    Se verifica que, a partir de los hechos de Stretch, el motor de inferencia deduzca correctamente que es una giraffe.
+
+2. **Inferencia hacia atrás (Backward Chaining):**
+
+    Se comprueba que, al preguntar si Splashy es un penguin, el motor de inferencia pueda confirmar correctamente esta conclusión utilizando los hechos y reglas disponibles.
+
+Se desarrollaron y ejecutaron correctamente ambos casos de prueba, verificando que el sistema puede deducir las especies de los animales según los hechos iniciales y las reglas definidas.
+
+![TestResults.png](img/TestResults.png)
+
 ## RETROSPECTIVA
 
 **1.** ¿Cuál fue el tiempo total invertido en el laboratorio por cada
 uno de ustedes? (Horas/Hombre)
 
+- Andrés Calderón: 6 horas
+- Santiago Botero: 5.5 horas
+
 **2.** ¿Cuál es el estado actual del laboratorio? ¿Por qué?
 
+El laboratorio se encuentra completo y funcional. Todas las funcionalidades solicitadas fueron implementadas: creación de la base de hechos y reglas, razonamiento hacia adelante y hacia atrás, y explicación de conclusiones. Además, las pruebas unitarias confirmaron que las inferencias se realizan correctamente.
+
 **3.** ¿Cuál consideran fue el mayor logro? ¿Por qué?
+
+El mayor logro fue la implementación correcta del motor de inferencia, capaz de deducir hechos nuevos y explicar el razonamiento detrás de cada conclusión. Esto se considera un logro porque permitió verificar la efectividad de las reglas y la consistencia de la base de conocimiento en un escenario real (clasificación de animales).
 
 **4.** ¿Cuál consideran que fue el mayor problema técnico? ¿Qué hicieron
 para resolverlo?
 
+El mayor problema técnico fue asegurar que las reglas se aplicaran correctamente en el razonamiento hacia atrás, especialmente al manejar dependencias entre hechos ya conocidos. Para resolverlo, se revisó la lógica de evaluación de reglas, se reforzó la estructura de la base de hechos y se implementaron pruebas paso a paso para garantizar que cada condición se verificara antes de inferir la conclusión.
+
 **5.** ¿Qué hicieron bien como equipo? ¿Qué se comprometen a hacer para
 mejorar los resultados?
 
+- Lo que hicimos bien: coordinación efectiva, división de tareas, y documentación.
+- Compromiso de mejora: mejorar la planificación inicial del laboratorio.
+
 **6**.¿Qué referencias usaron? ¿Cuál fue la más útil? Incluya citas con
 los estándares adecuados.
+
+Ninguna
 
 *Incluyan las respuesta*

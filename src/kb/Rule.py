@@ -5,6 +5,8 @@ from src.fb import FactBase
 
 class Rule:
     """"Definition of rules under the established language and syntax."""
+    condition = []
+    conclusion = ""
 
     @classmethod
     def rule(cls, condition: List[str], conclusion: str):

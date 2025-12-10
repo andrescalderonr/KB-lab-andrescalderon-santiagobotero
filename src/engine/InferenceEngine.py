@@ -35,7 +35,7 @@ class InferenceEngine:
 
                     if fb.get_value(conclusion) == Value.UNKNOWN:
                         fb.add_fact(conclusion, Value.TRUE, f"R{i + 1}")
-                        print(f"  ✓ Aplicada R{i + 1}: {conclusion}")
+                        print(f"Aplicada R{i + 1}: {conclusion}")
                         changed = True
 
         print(f"\nRazonamiento completado en {iteration} iteraciones.")
@@ -57,11 +57,11 @@ class InferenceEngine:
         result = cls._backward_recursive(kb, fb, proposition, set())
 
         if result == Value.TRUE:
-            print(f"\n✓ Se pudo probar: {proposition}")
+            print(f"\nSe pudo probar: {proposition}")
         elif result == Value.FALSE:
-            print(f"\n✗ Se probó falso: {proposition}")
+            print(f"\nSe probó falso: {proposition}")
         else:
-            print(f"\n? No se pudo determinar: {proposition}")
+            print(f"\nNo se pudo determinar: {proposition}")
 
         return fb
 
@@ -101,18 +101,18 @@ class InferenceEngine:
 
         current_value = fb.get_value(proposition)
         if current_value != Value.UNKNOWN:
-            print(f"  → {proposition} ya conocido: {current_value.name}")
+            print(f"{proposition} ya conocido: {current_value.name}")
             return current_value
 
         rules = kb.could_deduce(proposition)
 
         if not rules:
-            print(f"  ? No hay reglas para {proposition}")
+            print(f"No hay reglas para {proposition}")
             value = fb.ask_value(proposition)
             return value
 
         for rule in rules:
-            print(f"  Intentando regla: {rule.to_string()}")
+            print(f"Intentando regla: {rule.to_string()}")
 
             all_conditions_true = True
 
@@ -125,7 +125,7 @@ class InferenceEngine:
 
             if all_conditions_true:
                 fb.add_fact(proposition, Value.TRUE, "regla")
-                print(f"  ✓ Conclusión: {proposition} = TRUE")
+                print(f"Conclusión: {proposition} = TRUE")
                 return Value.TRUE
 
         return Value.UNKNOWN
